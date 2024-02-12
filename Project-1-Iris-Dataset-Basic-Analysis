@@ -1,9 +1,69 @@
 # Project-1-Iris-Dataset-Basic-Analysis-
 
-First of all to do EDA we will import libraries such as pandas,numpy,matplotib, seaborn and plotly.
+---First of all to do EDA we will import libraries such as pandas,numpy,matplotib, seaborn and plotly.
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+---after importing all the libraries we wiil load the given iris dtatset-
+
+df=pd.read_csv('Iris.csv')
+
+---Then we will use different fuctions like head(),describe() and info() to show first few rows of datset, descriptive statistics inforamation about dataset and information about al the columns of dataset including datatypes respectively.
+
+print(df.head())
+print(df.describe())
+print(df.info())
+
+---then null values are checked also with duplicate valuesand are being removed if any
+print(df.isnull().sum())
+print(df.duplicated().sum())
+df.dropna(inplace=True)
+df.drop_duplicates(inplace=True)
+
+--------then various distributions are being plooted using matplotlib and seaborn libraries
+
+---Firstly histograms are being plooted for various columns to check the distribution.
+
+
+df.hist(figsize=(7,8),bins=20)
+plt.show()
+
+
+-------then histograms along with line diagrams are being drawn to gain insights from dataset.
+
+df=pd.read_csv('Iris.csv')
+
+sns.set(style="whitegrid")
+plt.figure(figsize=(12, 8))
+
+#Histograms
+
+
+plt.subplot(2, 2, 2)
+sns.histplot(df['SepalLengthCm'], kde=True, color='salmon')
+plt.title('SepalLength Distribution')
+
+plt.subplot(2, 2, 3)
+sns.histplot(df['SepalWidthCm'], kde=True, color='green')
+plt.title('SepalWidth Distribution')
+
+plt.subplot(2, 2, 4)
+sns.histplot(df['PetalLengthCm'], kde=True, color='blue')
+plt.title('petal length Distribution')
+
+plt.subplot(2, 4, 1)
+sns.histplot(df['PetalWidthCm'], kde=True, color='red')
+plt.title('petal width Distribution')
+
+plt.tight_layout()
+plt.show()
+
+
+--------It shows the trends of differnet columns and how it is changing .
+
+
+
+then for data visualization i have used tableau .
