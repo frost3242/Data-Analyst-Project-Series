@@ -67,4 +67,20 @@ plt.show()
 
 
 then for data visualization i have used tableau .
-graph of different clumns have been plotted and reltionship betwwen differetn columns have been shownn in 
+
+graph of different clumns have been plotted and reltionship betwwen differetn columns have been shownn in pattern and trends folder.Refer from that folder.
+
+Variation of  different species have been shown with various columns like petal width,petal length,sepal lengthetc.
+
+not only this variation betwwen different columns of different species have also been shown and line diagram has been plotted like (petal length vs sepal width)
+
+also variation between species are shown with respect to sepal width,petal width,etc throug scatter plots ,line diagram.
+
+also differnt statistical values like mean ,medain are also mentioned for graph betwwen variaton of species with respect to various columns.
+
+filters are also applied in some of the graphs.
+
+
+
+
+
