@@ -1,1 +1,122 @@
+#####  firstly importing the weather dataset and then importing all the libraries 
 
+import pandas as pd
+import numpy as np
+     
+
+df = pd.read_csv('weather.csv')
+
+
+#### then extracting basic information including datatypes ,nonnull count values for differetn columns in datset and also extracting some few rows of dataset
+
+print(df.head())
+print(df.info())
+
+
+
+####  also extracting some statistical  or mathematical values related to different columns of  weather dataset.
+
+print(df.describe())
+
+
+
+####  To check for null values   and also for duplicate values and drop them if any
+
+print(df.isnull().sum())
+
+print(df.duplicated().sum())
+
+df.dropna(inplace=True)
+df.drop_duplicates(inplace=True)
+
+df.dropna(inplace=True)
+df.drop_duplicates(inplace=True)
+
+
+
+###  To change the data types of different columns to remove any inconsistency due to datatypes  Some of them are shown.
+
+df['WindGustSpeed'] = pd.to_numeric(df['WindGustSpeed'])
+df['Sunshine'] = pd.to_numeric(df['Sunshine'])
+df['WindSpeed9am'] = pd.to_numeric(df['WindSpeed9am'])
+
+
+
+####  To drop the row consiting of any values like N.A  as to clean the dataset.
+
+df = df.dropna(subset=["Sunshine", "WindGustDir","WindGustSpeed","WindDir9am","WindDir3pm","WindSpeed9am"])
+
+
+
+####  removing outliers using Interquartile Range (IQR)  method FROM different rows using filters .
+
+columns_to_handle = ["MinTemp", "MaxTemp", "Rainfall","Evaporation","Sunshine","WindGustSpeed","WindSpeed9am","WindSpeed3pm","Humidity9am","Humidity3pm","Pressure9am","Pressure3pm","Cloud9am","Cloud3pm","Temp9am","Temp3pm","RISK_MM"]
+
+for col in columns_to_handle:
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    # Filter rows within bounds
+    df = df[~((df[col] < lower_bound) | (df[col] > upper_bound))]
+
+#### then conerting the old weather to cleaned weather datset after being analyzed properly.
+df.to_csv('cleaned_weather_data.csv', index=False)
+
+
+
+#####  Visulaizations using tableau for advanced data analysis.
+
+interactive dashboards and visualizations to highlight trends and patterns are provided in project_2 folder .
+differnt graphs are plotted like bar graph ,histogram to show the trends among all the weather parameters
+dashboards are also shown for make it more interactive
+
+
+### using correlation and regression analysis.
+
+## I have plotted a correlation  matix to show relationship  between different weather parameters.
+
+
+correlation_matrix = df[["Cloud9am","Temp9am","Humidity9am","Pressure9am","WindDir9am","Rainfall"]].corr()
+print(correlation_matrix)
+
+plt.matshow(correlation_matrix)
+plt.title("Correlation Matrix")
+plt.show()
+
+
+###  This is basicaaly a R-score method that  typically returns the R-squared score, which is a statistical measure of how well the model fits the data.
+It  represents the proportion of variance in the dependent variable explained by the independent variables(from 0 to 1).
+
+X = df[["Temp9am", "Humidity9am","Pressure9am"]]
+y = df["Rainfall"]
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X, y)
+
+print(model.score(X, y))
+
+0.14873152241223575
+
+
+### regression analysis to predict one weather parameter based on others .
+
+
+new_temperature = 15
+new_humidity = 80
+new_pressure=1020
+prediction = model.predict([[new_temperature, new_humidity,new_pressure]])
+print(f"Predicted rainfall: {prediction[0]}")
+
+     
+Predicted rainfall: 1.8669619876942818
+
+     
+     
+     
+
+
+     
